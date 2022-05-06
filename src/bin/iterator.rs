@@ -1,7 +1,7 @@
 pub trait Iterator {
     type Item;
     fn hasNext(&mut self) -> bool;
-    fn next(&mut self) -> Option<Self::Item>;
+    fn next(&mut self) -> &Self::Item;
 }
 
 struct Music {
@@ -13,7 +13,7 @@ struct Music {
 struct Album {
     curr: usize,
     next: usize,
-    musics: Vec<Music>,
+    musics: Vec<&'static Music>,
 }
 
 impl Iterator for Album {
@@ -22,8 +22,9 @@ impl Iterator for Album {
         true
     }
 
-    fn next(&mut self) -> Option<Self::Item> {
-        Some(&self.musics[self.curr])
+    fn next(&mut self) -> &Self::Item {
+        let result = self.musics[self.curr];
+        &result
     }
 }
 
