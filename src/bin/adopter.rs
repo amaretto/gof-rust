@@ -1,6 +1,6 @@
 pub trait Print {
-    fn printWeak(&self, string: &str);
-    fn printStrong(&self, string: &str);
+    fn print_weak(&self);
+    fn print_strong(&self);
 }
 
 struct Banner {
@@ -8,14 +8,27 @@ struct Banner {
 }
 
 impl Banner {
-    fn showWithParen(&self) {
+    fn show_with_paren(&self) {
         println!("({})", self.string)
     }
-    fn showWithAstr(&self) {
+    fn show_with_astr(&self) {
         println!("*{}*", self.string)
     }
 }
 
+impl Print for Banner {
+    fn print_weak(&self) {
+        self.show_with_paren();
+    }
+    fn print_strong(&self) {
+        self.show_with_astr();
+    }
+}
+
 fn main() {
-    println!("hoge");
+    let b = Banner {
+        string: String::from("hoge"),
+    };
+    b.print_weak();
+    b.print_strong();
 }
